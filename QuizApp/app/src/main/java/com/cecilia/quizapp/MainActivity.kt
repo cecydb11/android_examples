@@ -1,4 +1,4 @@
-package com.example.quizapp
+package com.cecilia.quizapp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

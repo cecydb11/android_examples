@@ -1,4 +1,4 @@
-package com.example.quizapp
+package com.cecilia.quizapp
 
 import org.junit.Test
 

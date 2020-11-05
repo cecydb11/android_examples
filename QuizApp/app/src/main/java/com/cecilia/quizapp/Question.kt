@@ -1,4 +1,4 @@
-package com.example.quizapp
+package com.cecilia.quizapp
 
 data class Question (
     val id: Int,
