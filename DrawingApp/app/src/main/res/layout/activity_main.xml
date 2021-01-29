@@ -24,8 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="background image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background" />
+            android:scaleType="centerCrop" />
 
         <com.cecilia.drawingapp.DrawingView
             android:id="@+id/drawing_view"
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/ib_brush"
+        app:layout_constraintBottom_toTopOf="@id/ll_action_buttons"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fl_drawing_container"
@@ -137,6 +136,28 @@
         />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_action_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_paint_colors"
+        >
+
+
+    <ImageButton
+        android:id="@+id/ib_gallery"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_gallery"
+        android:contentDescription="Gallery"
+        android:scaleType="fitXY"
+        android:layout_margin="5dp"
+        />
+
     <ImageButton
         android:id="@+id/ib_brush"
         android:layout_width="50dp"
@@ -145,9 +166,17 @@
         android:contentDescription="Brush image"
         android:scaleType="fitXY"
         android:layout_margin="5dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_paint_colors"
         />
+
+        <ImageButton
+            android:id="@+id/ib_undo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_undo"
+            android:contentDescription="Undo image"
+            android:scaleType="fitXY"
+            android:layout_margin="5dp"
+            />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
