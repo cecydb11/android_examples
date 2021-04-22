@@ -15,13 +15,16 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.example.weatherapp.models.WeatherResponse
+import com.example.weatherapp.network.WeatherService
 import com.google.android.gms.location.*
 import com.karumi.dexter.Dexter
-import com.karumi.dexter.DexterBuilder
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -83,18 +86,60 @@ class MainActivity : AppCompatActivity() {
 
     private val mLocationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult : LocationResult){
+            //Get lat and long from the last location to send it to the function that will get the weather
             val mLastLocation: Location = locationResult.lastLocation
             val latitude = mLastLocation.latitude
             Log.i("Current latitude", "$latitude")
 
             val longitude = mLastLocation.longitude
             Log.i("Current longitude", "$longitude")
-            getLocationWeatherDetails()
+
+            //Call the function that will get the weather based on the location
+            getLocationWeatherDetails(latitude, longitude)
         }
     }
 
-    private fun getLocationWeatherDetails(){
+    private fun getLocationWeatherDetails(latitude: Double, longitude: Double){
         if(Constants.isNetworkAvailable(this)){
+            //Create the connection to retrofit
+            val retrofit : Retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            //Prepare the service object to make the call
+            val service : WeatherService = retrofit
+                .create<WeatherService>(WeatherService::class.java)
+
+            //Create the call object to get the response from the API based on out model
+            val listCall: Call<WeatherResponse> = service.getWeather(
+                latitude, longitude, Constants.METRIC_UNIT, Constants.APP_ID
+            )
+
+            //Handle the callback methods
+            listCall.enqueue(object : Callback<WeatherResponse>{
+                override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                    Log.e("Error", t!!.message.toString())
+                }
+
+                override fun onResponse(
+                    call: Call<WeatherResponse>,
+                    response: Response<WeatherResponse>?
+                ) {
+                    if(response!!.isSuccessful){
+                        val weatherList : WeatherResponse = response.body()!!
+                        Log.i("Response result: ", "$weatherList")
+                    }else{
+                        val rc = response.code()
+                        when(rc){
+                            400 -> Log.e("Error 400", "Bad connection")
+                            404 -> Log.e("Error 404", "Not Found")
+                            else -> Log.e("Error", "Error")
+                        }
+                    }
+                }
+
+            })
+
             Toast.makeText(this@MainActivity, "Internet connection available", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this@MainActivity, "No internet connection available", Toast.LENGTH_SHORT).show()
