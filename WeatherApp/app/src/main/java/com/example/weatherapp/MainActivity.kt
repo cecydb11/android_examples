@@ -2,12 +2,16 @@ package com.example.weatherapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
+import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
@@ -25,10 +29,15 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
+    private var mProgressDialog : Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +108,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun showProgressDialog(){
+        mProgressDialog = Dialog(this)
+        mProgressDialog!!.setContentView(R.layout.dialog_custom_progress)
+        mProgressDialog!!.show()
+    }
+
+    private fun cancelProgressDialog(){
+        if(mProgressDialog != null) {
+            mProgressDialog!!.dismiss()
+        }
+    }
+
     private fun getLocationWeatherDetails(latitude: Double, longitude: Double){
         if(Constants.isNetworkAvailable(this)){
             //Create the connection to retrofit
@@ -115,17 +137,22 @@ class MainActivity : AppCompatActivity() {
                 latitude, longitude, Constants.METRIC_UNIT, Constants.APP_ID
             )
 
+            //We start to do something in the background so we show the progress dialog.
+            showProgressDialog()
             //Handle the callback methods
             listCall.enqueue(object : Callback<WeatherResponse>{
                 override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
                     Log.e("Error", t!!.message.toString())
+                    //We have an error so we close the dialog.
+                    cancelProgressDialog()
                 }
-
                 override fun onResponse(
                     call: Call<WeatherResponse>,
                     response: Response<WeatherResponse>?
                 ) {
                     if(response!!.isSuccessful){
+                        //We have a response so we close the dialog.
+                        cancelProgressDialog()
                         val weatherList : WeatherResponse = response.body()!!
                         Log.i("Response result: ", "$weatherList")
                     }else{
@@ -137,9 +164,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-
             })
-
             Toast.makeText(this@MainActivity, "Internet connection available", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(this@MainActivity, "No internet connection available", Toast.LENGTH_SHORT).show()

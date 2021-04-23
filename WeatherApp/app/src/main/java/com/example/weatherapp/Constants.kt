@@ -27,7 +27,7 @@ object Constants{
             val networdInfo = connectivityManager.activeNetworkInfo
             return networdInfo != null && networdInfo.isConnectedOrConnecting
         }
-
-
     }
+
+
 }
