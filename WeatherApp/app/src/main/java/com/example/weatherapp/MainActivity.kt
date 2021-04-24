@@ -27,6 +27,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
@@ -151,9 +152,10 @@ class MainActivity : AppCompatActivity() {
                     response: Response<WeatherResponse>?
                 ) {
                     if(response!!.isSuccessful){
-                        //We have a response so we close the dialog.
-                        cancelProgressDialog()
                         val weatherList : WeatherResponse = response.body()!!
+                        //We have a response so we close the dialog.
+                        setupUI(weatherList)
+                        cancelProgressDialog()
                         Log.i("Response result: ", "$weatherList")
                     }else{
                         val rc = response.code()
@@ -200,5 +202,25 @@ class MainActivity : AppCompatActivity() {
         val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    private fun setupUI(weatherList: WeatherResponse){
+        for(i in weatherList.weather.indices){
+            Log.i("Weather Name", weatherList.weather.toString())
+
+            tv_main.text = weatherList.weather[i].main
+            tv_main_description.text = weatherList.weather[i].description
+            tv_temp.text = weatherList.main.temp.toString() + getUnit(application.resources.configuration.locales.toString())
+
+            
+        }
+    }
+
+    private fun getUnit(value: String): String?{
+        var value = "°C"
+        if(value == "US" || value == "LR" || value == "MM"){
+            value = "°F"
+        }
+        return value
     }
 }
