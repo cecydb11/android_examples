@@ -34,6 +34,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -208,11 +210,23 @@ class MainActivity : AppCompatActivity() {
         for(i in weatherList.weather.indices){
             Log.i("Weather Name", weatherList.weather.toString())
 
+            //Set the values from the API response to the corresponding TextView
             tv_main.text = weatherList.weather[i].main
             tv_main_description.text = weatherList.weather[i].description
-            tv_temp.text = weatherList.main.temp.toString() + getUnit(application.resources.configuration.locales.toString())
 
-            
+            tv_temp.text = weatherList.main.temp.toString() + getUnit(application.resources.configuration.locales.toString())
+            tv_humidity.text = weatherList.main.humidity.toString() + " per cent"
+
+            tv_sunrise_time.text = getUnixTime(weatherList.sys.sunrise)
+            tv_sunset_time.text = getUnixTime(weatherList.sys.sunset)
+
+            tv_min.text = weatherList.main.temp_min.toString() + " min"
+            tv_max.text = weatherList.main.temp_max.toString() + " max"
+
+            tv_speed.text = weatherList.wind.speed.toString()
+
+            tv_name.text = weatherList.name
+            tv_country.text = weatherList.sys.country
         }
     }
 
@@ -222,5 +236,13 @@ class MainActivity : AppCompatActivity() {
             value = "°F"
         }
         return value
+    }
+
+    private fun getUnixTime(timex: Long): String?{
+        val date = Date(timex *1000L)
+        val sdf = SimpleDateFormat("HH:mm")
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(date)
+
     }
 }
