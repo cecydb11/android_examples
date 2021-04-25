@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.location.Location
 import android.location.LocationManager
@@ -17,11 +18,14 @@ import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.weatherapp.models.WeatherResponse
 import com.example.weatherapp.network.WeatherService
 import com.google.android.gms.location.*
+import com.google.gson.Gson
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -41,12 +45,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mFusedLocationClient : FusedLocationProviderClient
     private var mProgressDialog : Dialog? = null
+    private lateinit var mSharedPreferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        //Private mode means only this app can use this information.
+        mSharedPreferences = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+        setupUI()
 
         if(!isLocationEnabled()){
             Toast.makeText(this, "Please turn on your location.", Toast.LENGTH_LONG).show()
@@ -111,6 +121,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_refresh -> {
+                requestLocationData()
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun showProgressDialog(){
         mProgressDialog = Dialog(this)
@@ -155,8 +178,15 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     if(response!!.isSuccessful){
                         val weatherList : WeatherResponse = response.body()!!
+
+                        //We store the response in our constant value using shared preferences
+                        val weatherResponseJsonString = Gson().toJson(weatherList)
+                        val editor = mSharedPreferences.edit()
+                        editor.putString(Constants.WEATHER_RESPONSE_DATA, weatherResponseJsonString)
+                        editor.apply()
+
+                        setupUI()
                         //We have a response so we close the dialog.
-                        setupUI(weatherList)
                         cancelProgressDialog()
                         Log.i("Response result: ", "$weatherList")
                     }else{
@@ -206,27 +236,52 @@ class MainActivity : AppCompatActivity() {
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
-    private fun setupUI(weatherList: WeatherResponse){
-        for(i in weatherList.weather.indices){
-            Log.i("Weather Name", weatherList.weather.toString())
+    private fun setupUI(){
+        val weatherResponseJsonString = mSharedPreferences.getString(Constants.WEATHER_RESPONSE_DATA, "")
+        if(!weatherResponseJsonString.isNullOrEmpty()) {
+            val weatherList =
+                Gson().fromJson(weatherResponseJsonString, WeatherResponse::class.java)
 
-            //Set the values from the API response to the corresponding TextView
-            tv_main.text = weatherList.weather[i].main
-            tv_main_description.text = weatherList.weather[i].description
+            for (i in weatherList.weather.indices) {
+                Log.i("Weather Name", weatherList.weather.toString())
 
-            tv_temp.text = weatherList.main.temp.toString() + getUnit(application.resources.configuration.locales.toString())
-            tv_humidity.text = weatherList.main.humidity.toString() + " per cent"
+                //Set the values from the API response to the corresponding TextView.
+                tv_main.text = weatherList.weather[i].main
+                tv_main_description.text = weatherList.weather[i].description
 
-            tv_sunrise_time.text = getUnixTime(weatherList.sys.sunrise)
-            tv_sunset_time.text = getUnixTime(weatherList.sys.sunset)
+                tv_temp.text =
+                    weatherList.main.temp.toString() + getUnit(application.resources.configuration.locales.toString())
+                tv_humidity.text = weatherList.main.humidity.toString() + " per cent"
 
-            tv_min.text = weatherList.main.temp_min.toString() + " min"
-            tv_max.text = weatherList.main.temp_max.toString() + " max"
+                tv_sunrise_time.text = getUnixTime(weatherList.sys.sunrise)
+                tv_sunset_time.text = getUnixTime(weatherList.sys.sunset)
 
-            tv_speed.text = weatherList.wind.speed.toString()
+                tv_min.text = weatherList.main.temp_min.toString() + " min"
+                tv_max.text = weatherList.main.temp_max.toString() + " max"
 
-            tv_name.text = weatherList.name
-            tv_country.text = weatherList.sys.country
+                tv_speed.text = weatherList.wind.speed.toString()
+
+                tv_name.text = weatherList.name
+                tv_country.text = weatherList.sys.country
+
+                //Set the images that correspond to each weather.
+                when (weatherList.weather[i].icon) {
+                    "01d" -> iv_main.setImageResource(R.drawable.sunny)
+                    "02d" -> iv_main.setImageResource(R.drawable.cloud)
+                    "03d" -> iv_main.setImageResource(R.drawable.cloud)
+                    "04d" -> iv_main.setImageResource(R.drawable.cloud)
+                    "04n" -> iv_main.setImageResource(R.drawable.cloud)
+                    "10d" -> iv_main.setImageResource(R.drawable.rain)
+                    "11d" -> iv_main.setImageResource(R.drawable.storm)
+                    "13d" -> iv_main.setImageResource(R.drawable.snowflake)
+                    "01n" -> iv_main.setImageResource(R.drawable.cloud)
+                    "02n" -> iv_main.setImageResource(R.drawable.cloud)
+                    "03n" -> iv_main.setImageResource(R.drawable.cloud)
+                    "10n" -> iv_main.setImageResource(R.drawable.cloud)
+                    "11n" -> iv_main.setImageResource(R.drawable.rain)
+                    "13n" -> iv_main.setImageResource(R.drawable.snowflake)
+                }
+            }
         }
     }
 
