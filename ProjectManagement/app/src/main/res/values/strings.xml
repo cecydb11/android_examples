@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PROMANAGER</string>
+    <string name="ic_splash_image">Project management icon</string>
+    <string name="ic_task_image">Project manager tasks icon</string>
+    <string name="intro_get_started">Let\'s get started!</string>
+
+</resources>
