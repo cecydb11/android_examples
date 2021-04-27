@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.cecy_.esapp">
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".login"
+            android:label="EsApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".inicioGeneral"
+            android:label="Esapp" />
+        <activity
+            android:name=".menuCliente"
+            android:label="Menú Clientes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".crearCuenta" />
+        <activity
+            android:name=".menuProveedor"
+            android:label="@string/title_activity_menu_proveedor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".crearSMS"
+            android:label="Enviar SMS" />
+        <activity
+            android:name=".categorias"
+            android:label="Categorias" />
+        <activity
+            android:name=".pedidos"
+            android:label="Realizar Pedidos" />
+        <activity
+            android:name=".listaPedidos"
+            android:label="Lista Pedidos" />
+        <activity
+            android:name=".perfil"
+            android:label="Perfil de Usuario"/>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".ubicaciones"
+            android:label="@string/title_activity_ubicaciones"></activity>
+    </application>
+
+</manifest>
