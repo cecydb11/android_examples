@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:background="#CCCCCC">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nombre proveedor"
+        android:id="@+id/tvNombre"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#fffefe"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Direccion"
+        android:id="@+id/tvDireccion"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/tvNombre"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Contacto proveedor"
+        android:id="@+id/tvContacto"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/tvDireccion"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Telefono"
+        android:id="@+id/tvTelefono"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/tvContacto"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Email"
+        android:id="@+id/tvEmail"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/tvTelefono"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Categoria proveedor"
+        android:id="@+id/tvCategoria"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/tvEmail"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ubicación"
+        android:id="@+id/btnUbicacion"
+        android:layout_gravity="right"
+        android:layout_alignTop="@+id/btnPedidos"
+        android:layout_alignParentEnd="true"
+        android:textAllCaps="false"
+        android:layout_marginRight="20dp"
+        android:background="#00edfd"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFF"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pedidos"
+        android:id="@+id/btnPedidos"
+        android:textAllCaps="false"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="#2bc728"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFF"
+        android:textStyle="bold" />
+
+</RelativeLayout>
