@@ -1,3 +1,3 @@
 # android_examples
 Exploring different Android functionalities for learning purposes
-https://forthebadge.com/images/badges/built-for-android.svg
+[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)
