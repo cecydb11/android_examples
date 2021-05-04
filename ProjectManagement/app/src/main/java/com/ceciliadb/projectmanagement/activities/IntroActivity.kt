@@ -1,10 +1,9 @@
-package com.example.projectmanagement.activities
+package com.ceciliadb.projectmanagement.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import com.example.projectmanagement.R
+import com.ceciliadb.projectmanagement.R
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : BaseActivity() {
