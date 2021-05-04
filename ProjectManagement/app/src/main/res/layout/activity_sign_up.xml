@@ -80,7 +80,7 @@
                     android:layout_marginTop="@dimen/auth_screen_til_marginTop"
                     android:layout_marginEnd="@dimen/auth_screen_til_marginStartEnd" >
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_mail"
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/email"

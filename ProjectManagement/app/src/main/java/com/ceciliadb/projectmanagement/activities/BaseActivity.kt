@@ -1,4 +1,4 @@
-package com.example.projectmanagement.activities
+package com.ceciliadb.projectmanagement.activities
 
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.projectmanagement.R
+import com.ceciliadb.projectmanagement.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_progress.*

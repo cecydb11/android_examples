@@ -1,4 +1,4 @@
-package com.example.projectmanagement
+package com.ceciliadb.projectmanagement
 
 import org.junit.Test
 

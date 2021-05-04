@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "752464471519",
+    "project_id": "promanager-76dee",
+    "storage_bucket": "promanager-76dee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752464471519:android:2837a7e7acaf06e62d506a",
+        "android_client_info": {
+          "package_name": "com.ceciliadb.projectmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752464471519-0d2b4he8av5bpgnvdbhvegju164mevat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq4RLhtDETlgKpXtpX8gnzYTXuRjnyDVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752464471519-0d2b4he8av5bpgnvdbhvegju164mevat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
