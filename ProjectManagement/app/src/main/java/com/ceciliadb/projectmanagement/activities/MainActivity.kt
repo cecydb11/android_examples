@@ -1,8 +1,7 @@
-package com.example.projectmanagement.activities
+package com.ceciliadb.projectmanagement.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.projectmanagement.R
+import com.ceciliadb.projectmanagement.R
 
 class MainActivity : BaseActivity() {
 
