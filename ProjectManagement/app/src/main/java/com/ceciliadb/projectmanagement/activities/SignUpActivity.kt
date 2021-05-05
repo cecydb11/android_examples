@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
 import com.ceciliadb.projectmanagement.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity() {
@@ -44,7 +46,31 @@ class SignUpActivity : BaseActivity() {
         //Calls the validation function and send the values we got,
         //it does something depending on the response.
         if(validateForm(name, email, password)){
-            Toast.makeText(this, "Registration ready.", Toast.LENGTH_LONG).show()
+            //We send a predetermined string to the progress dialog we created in the base activity
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            //We use our firebase connection to create a user with email and password
+            //as we previously enabled in the Firebase console
+            FirebaseAuth.getInstance()
+                .createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    //If it was completed we close the progress dialog
+                    hideProgressDialog()
+
+                    //We get the task result
+                    if(task.isSuccessful){
+                        //We creahe a firebase user, using the result from the task
+                        val firebaseUser : FirebaseUser = task.result!!.user!!
+                        val registeredEmail = firebaseUser.email!!
+                        Toast.makeText(this, "$name, you have " +
+                                "successfully registered the email address: " +
+                                "$registeredEmail", Toast.LENGTH_LONG).show()
+                        //We sign out with firebase and close the activity
+                        FirebaseAuth.getInstance().signOut()
+                        finish()
+                    }else{
+                        showErrorSnackBar(task.exception!!.message!!)
+                    }
+                }
         }
     }
 
