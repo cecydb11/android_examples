@@ -15,5 +15,5 @@ Find me on:
 
 ----- 
 
-[![watchers](https://img.shields.io/github/watchers/cecydb11/android_examples.svg)](https://github.com/cecydb11/android_examples/) 
+[![watchers](https://img.shields.io/github/watchers/cecydb11/android_examples.svg)](#) 
 ![Profile views](https://gpvc.arturio.dev/cecydb11)
