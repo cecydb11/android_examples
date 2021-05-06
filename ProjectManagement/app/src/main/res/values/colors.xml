@@ -7,4 +7,5 @@
     <color name="primary_text_color">#141517</color>
     <color name="secondary_text_color">#4D5055</color>
     <color name="snackbar_error_color">#F72400</color>
+    <color name="snackbar_success_color">#40A10C</color>
 </resources>
