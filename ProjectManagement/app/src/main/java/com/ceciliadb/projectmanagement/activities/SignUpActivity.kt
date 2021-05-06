@@ -58,12 +58,11 @@ class SignUpActivity : BaseActivity() {
 
                     //We get the task result
                     if(task.isSuccessful){
-                        //We creahe a firebase user, using the result from the task
+                        //We create a firebase user, using the result from the task
                         val firebaseUser : FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
-                        Toast.makeText(this, "$name, you have " +
-                                "successfully registered the email address: " +
-                                "$registeredEmail", Toast.LENGTH_LONG).show()
+                        showSuccessSnackBar("$name, you have successfully registered the " +
+                                "email address: $registeredEmail")
                         //We sign out with firebase and close the activity
                         FirebaseAuth.getInstance().signOut()
                         finish()
