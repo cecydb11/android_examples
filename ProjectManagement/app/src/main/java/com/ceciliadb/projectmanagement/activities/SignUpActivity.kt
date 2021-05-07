@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
 import com.ceciliadb.projectmanagement.R
+import com.ceciliadb.projectmanagement.firebase.FirestoreClass
+import com.ceciliadb.projectmanagement.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -53,19 +55,17 @@ class SignUpActivity : BaseActivity() {
             //as we previously enabled in the Firebase console
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                    //If it was completed we close the progress dialog
-                    hideProgressDialog()
-
                     //We get the task result
                     if(task.isSuccessful){
                         //We create a firebase user, using the result from the task
                         val firebaseUser : FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
-                        showSuccessSnackBar("$name, you have successfully registered the " +
-                                "email address: $registeredEmail")
-                        //We sign out with firebase and close the activity
-                        FirebaseAuth.getInstance().signOut()
-                        finish()
+
+                        //We create a User object with the data we got
+                        val user = User(firebaseUser.uid, name, registeredEmail)
+
+                        //We call the Firestore function to register the user in the DB
+                        FirestoreClass().registerUser(this, user)
                     }else{
                         showErrorSnackBar(task.exception!!.message!!)
                     }
@@ -90,5 +90,13 @@ class SignUpActivity : BaseActivity() {
                 true
             }
         }
+    }
+    
+     fun userRegisteredSuccess(){
+         //This is called from the Firestore class after we register the user in the database
+        showSuccessSnackBar("You have successfully registered the email address.")
+        hideProgressDialog()
+        FirebaseAuth.getInstance().signOut()
+        finish()
     }
 }
