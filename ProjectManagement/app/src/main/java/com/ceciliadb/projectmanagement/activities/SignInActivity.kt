@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
 import com.ceciliadb.projectmanagement.R
+import com.ceciliadb.projectmanagement.firebase.FirestoreClass
+import com.ceciliadb.projectmanagement.models.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -17,18 +19,6 @@ class SignInActivity : BaseActivity() {
         setupActionBar()
 
 
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        auth = FirebaseAuth.getInstance()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            showErrorSnackBar("User already logged in")
-            //reload();
-
-        }
     }
 
     private fun setupActionBar(){
@@ -64,16 +54,10 @@ class SignInActivity : BaseActivity() {
             FirebaseAuth.getInstance()
                 .signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
-                    //If it was completed we close the progress dialog
-                    hideProgressDialog()
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         showSuccessSnackBar("Login successful.")
-                        val user = auth.currentUser
-                        startActivity(
-                                Intent(this, MainActivity::class.java)
-                        )
-                        //updateUI(user)
+                        FirestoreClass().signInUser(this)
                     } else {
                         // If sign in fails, display a message to the user.
                         showErrorSnackBar("Authentication failed.")
@@ -81,6 +65,15 @@ class SignInActivity : BaseActivity() {
                     }
                 }
         }
+    }
+
+    fun loginSuccess(user: User?){
+        //This is called from the firestore class after getting the user's information
+        hideProgressDialog()
+        startActivity(
+            Intent(this, MainActivity::class.java)
+        )
+        finish()
     }
 
     private fun validateForm(email: String, password: String): Boolean{
