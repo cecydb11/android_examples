@@ -2,6 +2,7 @@
     <string name="app_name">PROMANAGER</string>
     <string name="ic_splash_image">Project management icon</string>
     <string name="ic_task_image">Project manager tasks icon</string>
+    <string name="image_contentDescription">Image</string>
     <string name="intro_get_started">Let\'s get started!</string>
     <string name="intro_text_description">Allows you to collaborate in different projects with multiple users.</string>
     <string name="sign_in">SIGN IN</string>
@@ -14,6 +15,9 @@
     <string name="email">Email</string>
     <string name="please_wait">Please Wait&#8230;</string>
     <string name="click_back_again_exit">Please click back again to exit.</string>
+
+    <string name="my_profile">My Profile</string>
+    <string name="sign_out">Sign Out</string>
 
 
 </resources>
