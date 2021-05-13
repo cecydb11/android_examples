@@ -32,11 +32,6 @@ This app is being developed with the instructions from [this Android Course](htt
 
 *[¹] The checkboxes display which activities have already been created and included in this repo, this is still under development.*
 
------  
-
-[![watchers](https://img.shields.io/github/watchers/cecydb11/android_examples.svg)](#) 
-![Profile views](https://gpvc.arturio.dev/cecydb11)
-
 -----
 Find me on:  
 [![googleplay](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://bit.ly/CeciliaPlaystore)
