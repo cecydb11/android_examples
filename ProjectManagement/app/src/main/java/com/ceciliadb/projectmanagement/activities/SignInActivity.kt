@@ -61,13 +61,13 @@ class SignInActivity : BaseActivity() {
                     } else {
                         // If sign in fails, display a message to the user.
                         showErrorSnackBar("Authentication failed.")
-                        //updateUI(null)
+                        hideProgressDialog()
                     }
                 }
         }
     }
 
-    fun loginSuccess(user: User?){
+    fun loginSuccess(user: User){
         //This is called from the firestore class after getting the user's information
         hideProgressDialog()
         startActivity(
