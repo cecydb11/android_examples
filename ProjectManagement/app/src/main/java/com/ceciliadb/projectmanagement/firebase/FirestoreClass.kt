@@ -3,6 +3,7 @@ package com.ceciliadb.projectmanagement.firebase
 import android.app.Activity
 import android.util.Log
 import com.ceciliadb.projectmanagement.activities.MainActivity
+import com.ceciliadb.projectmanagement.activities.MyProfileActivity
 import com.ceciliadb.projectmanagement.activities.SignInActivity
 import com.ceciliadb.projectmanagement.activities.SignUpActivity
 import com.ceciliadb.projectmanagement.models.User
@@ -30,7 +31,7 @@ class FirestoreClass {
             }
     }
 
-    fun signInUser(activity: Activity){
+    fun loadUserData(activity: Activity){
         mFireStore.collection(Constants.USERS)
             .document(getCurretUserID())
             .get()
@@ -47,6 +48,10 @@ class FirestoreClass {
                     is MainActivity->{
                         //From the main activity we set the logged in user image and name.
                         activity.updateNavigationUserDetails(loggedInUser)
+                    }
+                    is MyProfileActivity->{
+                        //From the profile activity we set the profile data into the UI.
+                        activity.setUserDataInUI(loggedInUser)
                     }
                 }
 
