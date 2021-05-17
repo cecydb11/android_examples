@@ -19,5 +19,7 @@
     <string name="my_profile">My Profile</string>
     <string name="sign_out">Sign Out</string>
 
+    <string name="mobile">Mobile</string>
+    <string name="update">UPDATE</string>
 
 </resources>
