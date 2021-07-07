@@ -20,7 +20,7 @@ class FirestoreClass {
     fun registerUser(activity: SignUpActivity, userInfo: User){
         //We create a document for each user inside the users collection
         mFireStore.collection(Constants.USERS)
-            .document(getCurretUserID())
+            .document(getCurrentUserID())
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
                 //Once the user is registered successfully we continue with the sign up activity.
@@ -33,7 +33,7 @@ class FirestoreClass {
 
     fun loadUserData(activity: Activity){
         mFireStore.collection(Constants.USERS)
-            .document(getCurretUserID())
+            .document(getCurrentUserID())
             .get()
             .addOnSuccessListener {document ->
                 //We convert the document we got into an object of type User in order to use
@@ -71,7 +71,7 @@ class FirestoreClass {
 
     }
 
-    fun getCurretUserID(): String{
+    fun getCurrentUserID(): String{
         var currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
         if(currentUser != null){
