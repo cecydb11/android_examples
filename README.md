@@ -21,7 +21,7 @@ This app is being developed with the instructions from [this Android Course](htt
 - [x] User registration with **Firebase** using email and password. 
 - [x] User login with **Firebase** using email and password. 
 - [x] User profile with personal information using **FireStore database**.
-- [ ] Profile picture selection, using **Firebase Storage**.
+- [x] Profile picture selection, using **Firebase Storage**.
 - [ ] Creating and deleting boards.
 - [ ] Adding multiple members to the created boards.
 - [ ] Creating new cards for tasks in a board.
