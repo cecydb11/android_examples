@@ -24,7 +24,7 @@ class SplashActivity : BaseActivity() {
             /*We get the current user ID which could be an ID if there's a user already logged in
             or an empty string in which case we will open the intro activity to either sign in or
             register a new user.*/
-            var currentUserID = FirestoreClass().getCurretUserID()
+            var currentUserID = FirestoreClass().getCurrentUserID()
             if(currentUserID.isNotEmpty()){
                 startActivity(Intent(this, MainActivity::class.java))
             }else {
