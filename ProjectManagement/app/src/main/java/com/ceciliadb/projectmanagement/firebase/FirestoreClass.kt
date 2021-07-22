@@ -2,6 +2,7 @@ package com.ceciliadb.projectmanagement.firebase
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import com.ceciliadb.projectmanagement.activities.MainActivity
 import com.ceciliadb.projectmanagement.activities.MyProfileActivity
 import com.ceciliadb.projectmanagement.activities.SignInActivity
@@ -28,6 +29,25 @@ class FirestoreClass {
             }.addOnFailureListener{
                 e->
                 Log.e(activity.javaClass.simpleName, "Error while registering the user: $e")
+            }
+    }
+
+    fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>){
+        //We get the users collection and update with the new data for the current user.
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName, "Profile data updated.")
+                Toast.makeText(activity,"Profile updated successfully!",
+                    Toast.LENGTH_SHORT).show()
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener{
+                e ->
+                activity.hideProgressDialog()
+                Log.i(activity.javaClass.simpleName, "Error while updating data.")
+                Toast.makeText(activity,"Error while updating profile",
+                    Toast.LENGTH_SHORT).show()
             }
     }
 
